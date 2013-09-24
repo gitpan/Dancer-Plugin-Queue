@@ -4,7 +4,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300039, CPAN::Meta::Converter version 2.132620",
    "license" : [
       "apache_2_0"
    ],
@@ -27,7 +27,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "6.17"
          }
       },
       "develop" : {
@@ -56,8 +56,13 @@
          "requires" : {
             "Dancer" : "0",
             "Dancer::Test" : "0",
-            "File::Find" : "0",
+            "ExtUtils::MakeMaker" : "0",
+            "File::Spec" : "0",
+            "File::Spec::Functions" : "0",
             "File::Temp" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
+            "List::Util" : "0",
             "Test::More" : "0.96",
             "perl" : "5.010"
          }
@@ -66,29 +71,30 @@
    "provides" : {
       "Dancer::Plugin::Queue" : {
          "file" : "lib/Dancer/Plugin/Queue.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "Dancer::Plugin::Queue::Array" : {
          "file" : "lib/Dancer/Plugin/Queue/Array.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       },
       "Dancer::Plugin::Queue::Role::Queue" : {
          "file" : "lib/Dancer/Plugin/Queue/Role/Queue.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com//dancer-plugin-queue/issues"
+         "web" : "https://github.com/dagolden/Dancer-Plugin-Queue/issues"
       },
-      "homepage" : "https://metacpan.org/release/Dancer-Plugin-Queue",
+      "homepage" : "https://github.com/dagolden/Dancer-Plugin-Queue",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/dagolden/dancer-plugin-queue.git",
-         "web" : "https://github.com/dagolden/dancer-plugin-queue"
+         "url" : "https://github.com/dagolden/Dancer-Plugin-Queue.git",
+         "web" : "https://github.com/dagolden/Dancer-Plugin-Queue"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002",
+   "x_authority" : "cpan:DAGOLDEN"
 }
 

@@ -4,7 +4,7 @@ use warnings;
 
 package Dancer::Plugin::Queue::Array;
 # ABSTRACT: No abstract given for Dancer::Plugin::Queue::Array
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 # Dependencies
 use Moo;
@@ -12,42 +12,44 @@ with 'Dancer::Plugin::Queue::Role::Queue';
 
 
 has name => (
-  is       => 'ro',
-  required => 1,
+    is       => 'ro',
+    required => 1,
 );
 
 has _messages => (
-  is      => 'ro',
-  default => sub { [] },
+    is      => 'ro',
+    default => sub { [] },
 );
 
 
 sub add_msg {
-  my ( $self, $msg ) = @_;
-  push @{ $self->_messages }, $msg;
+    my ( $self, $msg ) = @_;
+    push @{ $self->_messages }, $msg;
 }
 
 
 sub get_msg {
-  my ($self) = @_;
-  my $msg = shift @{ $self->_messages };
-  return wantarray ? ( $msg, $msg ) : $msg;
+    my ($self) = @_;
+    my $msg = shift @{ $self->_messages };
+    return wantarray ? ( $msg, $msg ) : $msg;
 }
 
 
 sub remove_msg {
-  my ( $self, $msg ) = @_;
-  # XXX NOOP since 'get_msg' already removes it
+    my ( $self, $msg ) = @_;
+    # XXX NOOP since 'get_msg' already removes it
 }
 
 1;
 
 
-# vim: ts=2 sts=2 sw=2 et:
+# vim: ts=4 sts=4 sw=4 et:
 
 __END__
 
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -55,7 +57,7 @@ Dancer::Plugin::Queue::Array - No abstract given for Dancer::Plugin::Queue::Arra
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

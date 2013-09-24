@@ -4,7 +4,7 @@ use warnings;
 
 package Dancer::Plugin::Queue;
 # ABSTRACT: Dancer plugin for message queue abstractions
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 use Dancer::Plugin;
 use Class::Load qw/try_load_class/;
@@ -13,52 +13,57 @@ my %queues;
 my $conf;
 
 register queue => sub {
-  my ( $self, $name ) = plugin_args(@_);
-  $conf ||= plugin_setting();
+    my ( $self, $name ) = plugin_args(@_);
+    $conf ||= plugin_setting();
 
-  # if name not specified, DWIM or use 'default'
-  if ( not defined $name ) {
-    if ( keys %$conf == 1 ) {
-      ($name) = keys %$conf;
+    # if name not specified, DWIM or use 'default'
+    if ( not defined $name ) {
+        if ( keys %$conf == 1 ) {
+            ($name) = keys %$conf;
+        }
+        elsif ( exists $conf->{default} ) {
+            $name = "default";
+        }
+        else {
+            die "Can't determine a default queue name";
+        }
     }
-    elsif ( exists $conf->{default} ) {
-      $name = "default";
-    }
-    else {
-      die "Can't determine a default queue name";
-    }
-  }
 
-  # return cached object if already created
-  return $queues{$name} if defined $queues{$name};
+    # return cached object if already created
+    return $queues{$name} if defined $queues{$name};
 
-  # otherwise, instantiate the object from config settings
-  my $queue_conf = $conf->{$name}
-    or die "No configuration for queue '$name'";
+    # otherwise, instantiate the object from config settings
+    my $queue_conf = $conf->{$name}
+      or die "No configuration for queue '$name'";
 
-  my $class = $queue_conf->{class}
-    or die "No class specified for queue '$name'";
+    my $class = $queue_conf->{class}
+      or die "No class specified for queue '$name'";
 
-  $class = "Dancer::Plugin::Queue::$class";
+    $class = "Dancer::Plugin::Queue::$class";
 
-  try_load_class($class)
-    or die "Queue class '$class' could not be loaded";
+    try_load_class($class)
+      or die "Queue class '$class' could not be loaded";
 
-  $class->can('DOES') && $class->DOES("Dancer::Plugin::Queue::Role::Queue")
-    or die "Queue class '$class' does not implement the expected role";
+    $class->can('DOES') && $class->DOES("Dancer::Plugin::Queue::Role::Queue")
+      or die "Queue class '$class' does not implement the expected role";
 
-  my $object = eval { $class->new( $queue_conf->{options} || {} ) }
-    or die "Could not create $class object: $@";
+    my $object = eval { $class->new( $queue_conf->{options} || {} ) }
+      or die "Could not create $class object: $@";
 
-  return $queues{$name} = $object;
+    return $queues{$name} = $object;
 };
 
-register_plugin for_versions => [ 1, 2 ];
+register_plugin;
 1;
+
+
+# vim: ts=4 sts=4 sw=4 et:
 
 __END__
 
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -66,7 +71,7 @@ Dancer::Plugin::Queue - Dancer plugin for message queue abstractions
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -101,13 +106,11 @@ This module provides a generic interface to a message queue.  Message queue
 implementations must implement the L<Dancer::Plugin::Queue::Role::Queue> role,
 which defines the interface to abstract the specifics of the backend.
 
-This plugin should be compatible with Dancer 1 and Dancer 2.
-
 =for Pod::Coverage method_names_here
 
 =head1 CONFIGURATION
 
-Queue objects are defined by a C<NAME => HASHREF> pair.  The hash reference
+Queue objects are defined by a C<< NAME => HASHREF >> pair.  The hash reference
 must contain a 'class' key, whose value is a class name suffix that will be
 appended to C<Dancer::Plugin::Queue::>.  The resulting class will be loaded on
 demand.  If the hash reference contains an 'options' key, its value will be
@@ -163,7 +166,7 @@ message durability, this method may do nothing.
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<https://github.com//dancer-plugin-queue/issues>.
+at L<https://github.com/dagolden/Dancer-Plugin-Queue/issues>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -171,9 +174,9 @@ You will be notified automatically of any progress on your issue.
 This is open source software.  The code repository is available for
 public review and contribution under the terms of the license.
 
-L<https://github.com/dagolden/dancer-plugin-queue>
+L<https://github.com/dagolden/Dancer-Plugin-Queue>
 
-  git clone git://github.com/dagolden/dancer-plugin-queue.git
+  git clone https://github.com/dagolden/Dancer-Plugin-Queue.git
 
 =head1 AUTHOR
 

@@ -5,14 +5,19 @@ author:
 build_requires:
   Dancer: 0
   Dancer::Test: 0
-  File::Find: 0
+  ExtUtils::MakeMaker: 0
+  File::Spec: 0
+  File::Spec::Functions: 0
   File::Temp: 0
+  IO::Handle: 0
+  IPC::Open3: 0
+  List::Util: 0
   Test::More: 0.96
   perl: 5.010
 configure_requires:
-  ExtUtils::MakeMaker: 6.30
+  ExtUtils::MakeMaker: 6.17
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300039, CPAN::Meta::Converter version 2.132620'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -29,13 +34,13 @@ no_index:
 provides:
   Dancer::Plugin::Queue:
     file: lib/Dancer/Plugin/Queue.pm
-    version: 0.001
+    version: 0.002
   Dancer::Plugin::Queue::Array:
     file: lib/Dancer/Plugin/Queue/Array.pm
-    version: 0.001
+    version: 0.002
   Dancer::Plugin::Queue::Role::Queue:
     file: lib/Dancer/Plugin/Queue/Role/Queue.pm
-    version: 0.001
+    version: 0.002
 recommends:
   Class::Load::XS: 0
 requires:
@@ -47,7 +52,8 @@ requires:
   strict: 0
   warnings: 0
 resources:
-  bugtracker: https://github.com//dancer-plugin-queue/issues
-  homepage: https://metacpan.org/release/Dancer-Plugin-Queue
-  repository: git://github.com/dagolden/dancer-plugin-queue.git
-version: 0.001
+  bugtracker: https://github.com/dagolden/Dancer-Plugin-Queue/issues
+  homepage: https://github.com/dagolden/Dancer-Plugin-Queue
+  repository: https://github.com/dagolden/Dancer-Plugin-Queue.git
+version: 0.002
+x_authority: cpan:DAGOLDEN
